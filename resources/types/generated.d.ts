@@ -4,6 +4,7 @@ declare namespace App.Data {
   };
 }
 declare namespace App.Models {
+  export type Guest = {};
   export type User = {
     id: number;
     name: string;

@@ -9,4 +9,9 @@ class Guest extends Model
 {
     /** @use HasFactory<\Database\Factories\GuestFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+    ];
 }

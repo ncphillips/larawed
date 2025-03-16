@@ -14,7 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->text('first_name');
             $table->text('last_name');
-            $table->boolean('attending');
+            $table->boolean('attending')->nullable();
+            $table->text('email')->nullable();
             $table->timestamps();
         });
     }

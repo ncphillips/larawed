@@ -4,7 +4,15 @@ declare namespace App.Data {
   };
 }
 declare namespace App.Models {
-  export type Guest = {};
+  export type Guest = {
+    id: number;
+    first_name: string;
+    last_name: string;
+    attending: boolean | null;
+    email: string | null;
+    created_at: string | null;
+    updated_at: string | null;
+  };
   export type User = {
     id: number;
     name: string;

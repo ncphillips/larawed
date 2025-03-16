@@ -15,6 +15,9 @@
             <span v-if="guest.email">({{ guest.email }})</span>
           </span>
           <span>
+            {{ guest.invitation.slug }}
+          </span>
+          <span>
             <template v-if="guest.attending === null">TBD</template>
             <template v-else-if="guest.attending">Attending</template>
             <template v-else>Not attending</template>
@@ -30,8 +33,11 @@ import Layout from "@/Layouts/Layout.vue";
 import { Head } from "@inertiajs/vue3";
 import Card from "@/Components/Card.vue";
 import Guest = App.Models.Guest;
+import Invitation = App.Models.Invitation;
+
+type GuestWithInvitation = Guest & { invitation: Invitation };
 
 defineProps<{
-  guests: Guest[];
+  guests: GuestWithInvitation[];
 }>();
 </script>

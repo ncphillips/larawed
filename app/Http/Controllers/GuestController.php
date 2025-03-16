@@ -9,7 +9,7 @@ class GuestController extends Controller
     public function index()
     {
         return inertia('Guests/Index', [
-            'guests' => Guest::all(),
+            'guests' => Guest::with('invitation')->get(),
         ]);
     }
 }

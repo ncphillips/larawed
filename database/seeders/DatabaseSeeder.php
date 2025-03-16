@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Data\GuestSheetData;
 use App\Models\Guest;
+use App\Models\Invitation;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -31,10 +32,15 @@ class DatabaseSeeder extends Seeder
             $last_name = $row[2];
             $email = $row[3];
 
+            $invitation = Invitation::firstOrCreate([
+                'slug' => $invitation_slug
+            ]);
+
             $guest = Guest::updateOrInsert([
                 'first_name' => $first_name,
                 'last_name' => $last_name,
             ], [
+                'invitation_id' => $invitation->id,
                 'email' => $email
             ]);
 

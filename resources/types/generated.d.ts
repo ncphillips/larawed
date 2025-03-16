@@ -12,6 +12,13 @@ declare namespace App.Models {
     email: string | null;
     created_at: string | null;
     updated_at: string | null;
+    invitation_id: number | null;
+  };
+  export type Invitation = {
+    id: number;
+    slug: string;
+    created_at: string | null;
+    updated_at: string | null;
   };
   export type User = {
     id: number;

@@ -1,3 +1,8 @@
+declare namespace App.Data {
+  export type SharedInertiaData = {
+    currentUser: App.Models.User | null;
+  };
+}
 declare namespace App.Models {
   export type User = {
     id: number;

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@200;300;400&display=swap");
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -8,5 +10,30 @@
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.heading {
+    font-family: "Dancing Script", cursive;
+}
+
+.body {
+    font-family: "Montserrat", sans-serif;
+}
+
+.link {
+    text-decoration: underline;
+    color: var(--color-purple-900);
+
+    &:hover {
+        color: var(--color-purple-700);
+    }
+}
+

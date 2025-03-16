@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\InvitationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,3 +13,4 @@ Route::get('/location', function () {
 });
 
 Route::resource('guests', GuestController::class);
+Route::resource('invitations', InvitationController::class);

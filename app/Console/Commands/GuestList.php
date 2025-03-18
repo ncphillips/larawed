@@ -39,6 +39,13 @@ class GuestList extends Command
             'password' => Hash::make('blueberry'),
         ]);
 
+        User::updateOrInsert([
+            'email' => 'ecgormley3@gmail.com',
+        ], [
+            'name' => 'Ellen',
+            'password' => Hash::make('blueberry'),
+        ]);
+
 
         /**
          * @var Collection<GuestSheetData> $rows

@@ -51,8 +51,8 @@ class GuestList extends Command
          * @var Collection<GuestSheetData> $rows
          */
         $rows = [
-            ['mushroom-glove', 'Brent', 'Mitton', 'bm@dude.com'],
-            ['mushroom-glove', 'Jess', 'Compagnon', ''],
+            ['mushroom-glove', 'Brent', 'Mitton', 'hello@nolanphillips.com'],
+            ['mushroom-glove', 'Jess', 'Compagnon', 'hello@nolanphillips.com'],
         ];
 
         foreach ($rows as $row) {

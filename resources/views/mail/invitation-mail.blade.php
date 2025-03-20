@@ -1,13 +1,17 @@
 <x-mail::message>
-# You've Been Invited
+# 💍 We're Getting Married! 💍
 
-You have been invited to join us for a wedding...our wedding!
+Hey there!
 
-Huzzah!
+We're beyond excited to invite you to celebrate with us as we tie the knot! 
+
+We can't imagine our special day without you there, and we'd love for you to join us for some good food, great company, and maybe even a dance or two (no pressure on the dancing part 😉).
 
 <x-mail::button :url="route('rsvp.show', [$guest->invitation->slug])">
-    RSPV Now!
+    RSVP Here!
 </x-mail::button>
 
-Ellen & Nolan
+Can't wait to celebrate with you!
+
+With love,<br>Ellen & Nolan
 </x-mail::message>

@@ -21,50 +21,63 @@
             font-family: 'Dancing Script', cursive !important;
             font-weight: 700 !important;
             font-size: 2.5em !important;
-            color: #333333 !important;
+            color: #000000 !important;
             text-decoration: none !important;
         }
 
         body {
-            background: linear-gradient(135deg, rgba(252, 231, 243, 0.4), rgba(219, 234, 254, 0.4), rgba(243, 232, 255, 0.4)) fixed;
+            background: linear-gradient(to right, #fce7f3, #dbeafe, #f3e8ff);
             min-height: 100vh;
             margin: 0;
             padding: 20px;
         }
 
+        table {
+            background: transparent !important;
+        }
+
+        td {
+            background: transparent !important;
+        }
+
         .wrapper {
-            background: transparent;
-            min-height: 100vh;
+            background: transparent !important;
         }
 
         .content {
-            max-width: 800px;
-            margin: 0 auto;
+            background: transparent !important;
+        }
+
+        .body {
+            background: transparent !important;
+            border: none !important;
         }
 
         .inner-body {
-            background: #ffffff;
-            border-radius: 8px;
+            background: #f7f7f7 !important;
+            border-radius: 12px !important;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             margin: 20px auto;
             padding: 30px;
         }
 
         .content-cell {
-            color: #666666;
+            color: #4a5568;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-size: 16px;
             line-height: 1.6;
+            background: transparent !important;
         }
 
         .button {
             background-color: #2d3748;
-            border-radius: 4px;
+            border-radius: 8px;
             color: #ffffff;
             display: inline-block;
             padding: 12px 24px;
             text-decoration: none;
             transition: background-color 0.2s;
+            font-size: 18px;
         }
 
         .button:hover {
@@ -94,16 +107,16 @@
 
 <body>
 
-    <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+    <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation" bgcolor="transparent">
         <tr>
-            <td align="center">
-                <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+            <td align="center" bgcolor="transparent">
+                <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation"
+                    bgcolor="transparent">
                     {{ $header ?? '' }}
 
                     <!-- Email Body -->
                     <tr>
-                        <td class="body" width="100%" cellpadding="0" cellspacing="0"
-                            style="border: hidden !important;">
+                        <td class="body" width="100%" cellpadding="0" cellspacing="0" bgcolor="transparent">
                             <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0"
                                 role="presentation">
                                 <!-- Body content -->

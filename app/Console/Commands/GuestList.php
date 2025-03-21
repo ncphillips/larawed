@@ -2,13 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Data\GuestSheetData;
 use App\Models\Guest;
 use App\Models\Invitation;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Collection;
+use League\Csv\Reader;
 
 class GuestList extends Command
 {
@@ -24,14 +23,13 @@ class GuestList extends Command
      *
      * @var string
      */
-    protected $description = 'Update the guest list';
+    protected $description = 'Update the guest list from the CSV file';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-
         User::updateOrInsert([
             'email' => 'hello@nolanphillips.com',
         ], [
@@ -46,32 +44,23 @@ class GuestList extends Command
             'password' => Hash::make('blueberry'),
         ]);
 
+        $csv = Reader::createFromPath(base_path('data/guests.csv'), 'r');
+        $csv->setHeaderOffset(0);
 
-        /**
-         * @var Collection<GuestSheetData> $rows
-         */
-        $rows = [
-            ['mushroom-glove', 'Brent', 'Mitton', 'hello@nolanphillips.com'],
-            ['mushroom-glove', 'Jess', 'Compagnon', 'hello@nolanphillips.com'],
-        ];
-
-        foreach ($rows as $row) {
-            $invitation_slug = $row[0];
-            $first_name = $row[1];
-            $last_name = $row[2];
-            $email = $row[3];
-
+        foreach ($csv as $record) {
             $invitation = Invitation::firstOrCreate([
-                'slug' => $invitation_slug
+                'slug' => $record['invitation_slug']
             ]);
 
-            $guest = Guest::updateOrInsert([
-                'first_name' => $first_name,
-                'last_name' => $last_name,
+            Guest::updateOrInsert([
+                'first_name' => $record['first_name'],
+                'last_name' => $record['last_name'],
             ], [
                 'invitation_id' => $invitation->id,
-                'email' => $email
+                'email' => $record['email']
             ]);
         }
+
+        $this->info('Guest list updated successfully!');
     }
 }

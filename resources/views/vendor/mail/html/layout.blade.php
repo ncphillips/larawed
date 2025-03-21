@@ -56,6 +56,7 @@
         .inner-body {
             background: #f7f7f7 !important;
             border-radius: 12px !important;
+            border: 1px solid #e2e8f0 !important;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             margin: 20px auto;
             padding: 30px;

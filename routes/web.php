@@ -13,6 +13,10 @@ Route::name('location')->get('/location', function () {
     return inertia('Location');
 });
 
+Route::name('faq')->get('/faq', function () {
+    return inertia('FAQ');
+});
+
 Route::resource('guests', GuestController::class);
 Route::resource('invitations', InvitationController::class);
 

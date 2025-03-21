@@ -1,0 +1,7 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- The root element of every pay should be the Layout component `@/Layouts/Layout.vue`.
+- Pages should never render the `<Heading>` component (it's in the Layout).

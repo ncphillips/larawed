@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3";
 import Card from "@/Components/Card.vue";
-import Heading from "@/Components/Heading.vue";
 import Divider from "@/Components/Divider.vue";
 import { Link } from "@inertiajs/vue3";
 import { ref, onMounted } from "vue";
+import Layout from "@/Layouts/Layout.vue";
 
 // Helper function to create slug for IDs
 const slugify = (text: string) => {
@@ -119,151 +119,142 @@ const faqSections = [
 </script>
 
 <template>
-  <div>
+  <Layout>
     <Head title="FAQ" />
 
-    <div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <Heading class="text-center mb-12" />
+    <Card class="overflow-hidden">
+      <div class="p-6">
+        <h1 class="heading text-6xl text-center mb-4">FAQ</h1>
+        <p class="text-center text-gray-600 mb-12 text-xl">
+          Frequently Asked Questions
+        </p>
 
-      <Card class="overflow-hidden">
-        <div class="p-6">
-          <h1 class="heading text-6xl text-center mb-4">FAQ</h1>
-          <p class="text-center text-gray-600 mb-12 text-xl">
-            Frequently Asked Questions
-          </p>
-
-          <nav class="toc mb-12">
-            <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <li v-for="section in faqSections" :key="section.title">
-                <a
-                  :href="'#' + slugify(section.title)"
-                  :class="[
-                    'heading text-2xl text-purple-800 hover:text-purple-600 transition-colors block mb-2 group',
-                    currentHash === '#' + slugify(section.title)
-                      ? 'text-purple-600 rounded-sm border border-purple-600'
-                      : '',
-                  ]"
-                >
-                  {{ section.title }}
-                  <span
-                    class="inline-block transition-transform group-hover:translate-x-1"
-                    >→</span
-                  >
-                </a>
-                <ul class="space-y-1">
-                  <li
-                    v-for="question in section.questions"
-                    :key="question.question"
-                  >
-                    <a
-                      :href="'#' + slugify(question.question)"
-                      :class="[
-                        'text-gray-600 hover:text-purple-600 transition-colors group inline-flex items-center',
-                        currentHash === '#' + slugify(question.question)
-                          ? 'text-purple-600 bg-purple-50 -mx-2 px-2 py-0.5 rounded border border-purple-300'
-                          : '',
-                      ]"
-                    >
-                      {{ question.question }}
-                      <span
-                        class="inline-block transition-transform group-hover:translate-x-1 ml-1 opacity-0 group-hover:opacity-100"
-                        >→</span
-                      >
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </nav>
-
-          <div class="w-full flex justify-center">
-            <Divider :height="60" class="my-8" />
-          </div>
-
-          <div
-            v-for="(section, sectionIndex) in faqSections"
-            :key="section.title"
-            class="mb-12 last:mb-0"
-          >
-            <h2
-              :id="slugify(section.title)"
-              :class="[
-                'heading text-3xl text-gray-900 mb-4 text-center group',
-                currentHash === '#' + slugify(section.title)
-                  ? 'text-purple-800'
-                  : '',
-              ]"
-            >
-              {{ section.title }}
+        <nav class="toc mb-12">
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <li v-for="section in faqSections" :key="section.title">
               <a
                 :href="'#' + slugify(section.title)"
-                class="opacity-0 group-hover:opacity-100 ml-2 text-purple-600 hover:text-purple-800 transition-all"
+                :class="[
+                  'heading text-2xl text-purple-800 hover:text-purple-600 transition-colors block mb-2 group',
+                  currentHash === '#' + slugify(section.title)
+                    ? 'text-purple-600 rounded-sm border border-purple-600'
+                    : '',
+                ]"
               >
-                #
+                {{ section.title }}
+                <span
+                  class="inline-block transition-transform group-hover:translate-x-1"
+                  >→</span
+                >
               </a>
-            </h2>
-            <div
-              v-for="(faq, faqIndex) in section.questions"
-              :key="faq.question"
+              <ul class="space-y-1">
+                <li
+                  v-for="question in section.questions"
+                  :key="question.question"
+                >
+                  <a
+                    :href="'#' + slugify(question.question)"
+                    :class="[
+                      'text-gray-600 hover:text-purple-600 transition-colors group inline-flex items-center',
+                      currentHash === '#' + slugify(question.question)
+                        ? 'text-purple-600 bg-purple-50 -mx-2 px-2 py-0.5 rounded border border-purple-300'
+                        : '',
+                    ]"
+                  >
+                    {{ question.question }}
+                    <span
+                      class="inline-block transition-transform group-hover:translate-x-1 ml-1 opacity-0 group-hover:opacity-100"
+                      >→</span
+                    >
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="w-full flex justify-center">
+          <Divider :height="60" class="my-8" />
+        </div>
+
+        <div
+          v-for="(section, sectionIndex) in faqSections"
+          :key="section.title"
+          class="mb-12 last:mb-0"
+        >
+          <h2
+            :id="slugify(section.title)"
+            :class="[
+              'heading text-3xl text-gray-900 mb-4 text-center group',
+              currentHash === '#' + slugify(section.title)
+                ? 'text-purple-800'
+                : '',
+            ]"
+          >
+            {{ section.title }}
+            <a
+              :href="'#' + slugify(section.title)"
+              class="opacity-0 group-hover:opacity-100 ml-2 text-purple-600 hover:text-purple-800 transition-all"
             >
-              <div class="py-4 text-center">
-                <div
+              #
+            </a>
+          </h2>
+          <div v-for="(faq, faqIndex) in section.questions" :key="faq.question">
+            <div class="py-4 text-center">
+              <div
+                :class="[
+                  'transition-colors rounded py-2',
+                  currentHash === '#' + slugify(faq.question)
+                    ? 'bg-purple-50 border border-purple-300'
+                    : '',
+                ]"
+              >
+                <h3
+                  :id="slugify(faq.question)"
                   :class="[
-                    'transition-colors rounded py-2',
+                    'text-lg font-medium mb-2 group transition-colors',
                     currentHash === '#' + slugify(faq.question)
-                      ? 'bg-purple-50 border border-purple-300'
-                      : '',
+                      ? 'text-purple-800'
+                      : 'text-gray-900',
                   ]"
                 >
-                  <h3
-                    :id="slugify(faq.question)"
-                    :class="[
-                      'text-lg font-medium mb-2 group transition-colors',
-                      currentHash === '#' + slugify(faq.question)
-                        ? 'text-purple-800'
-                        : 'text-gray-900',
-                    ]"
+                  {{ faq.question }}
+                  <a
+                    :href="'#' + slugify(faq.question)"
+                    class="opacity-0 group-hover:opacity-100 ml-2 text-purple-600 hover:text-purple-800 transition-all"
                   >
-                    {{ faq.question }}
-                    <a
-                      :href="'#' + slugify(faq.question)"
-                      class="opacity-0 group-hover:opacity-100 ml-2 text-purple-600 hover:text-purple-800 transition-all"
-                    >
-                      #
-                    </a>
-                  </h3>
-                  <p
-                    :class="[
-                      'transition-colors',
-                      currentHash === '#' + slugify(faq.question)
-                        ? 'text-gray-700'
-                        : 'text-gray-600',
-                    ]"
+                    #
+                  </a>
+                </h3>
+                <p
+                  :class="[
+                    'transition-colors',
+                    currentHash === '#' + slugify(faq.question)
+                      ? 'text-gray-700'
+                      : 'text-gray-600',
+                  ]"
+                >
+                  {{ faq.answer }}
+                  <Link
+                    v-if="faq.question === 'Where is the wedding taking place?'"
+                    href="/location"
+                    class="text-purple-600 hover:text-purple-800 transition-colors"
                   >
-                    {{ faq.answer }}
-                    <Link
-                      v-if="
-                        faq.question === 'Where is the wedding taking place?'
-                      "
-                      href="/location"
-                      class="text-purple-600 hover:text-purple-800 transition-colors"
-                    >
-                      View Location Details →
-                    </Link>
-                  </p>
-                </div>
+                    View Location Details →
+                  </Link>
+                </p>
               </div>
-              <div class="flex justify-center">
-                <Divider
-                  v-if="faqIndex !== section.questions.length - 1"
-                  :height="40"
-                  class="my-2"
-                />
-              </div>
+            </div>
+            <div class="flex justify-center">
+              <Divider
+                v-if="faqIndex !== section.questions.length - 1"
+                :height="40"
+                class="my-2"
+              />
             </div>
           </div>
         </div>
-      </Card>
-    </div>
-  </div>
+      </div>
+    </Card>
+  </Layout>
 </template>

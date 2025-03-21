@@ -4,10 +4,29 @@ import Card from "@/Components/Card.vue";
 import Heading from "@/Components/Heading.vue";
 import Divider from "@/Components/Divider.vue";
 import { Link } from "@inertiajs/vue3";
+import { ref, onMounted } from "vue";
+
+// Helper function to create slug for IDs
+const slugify = (text: string) => {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+};
+
+// Add ref for current hash
+const currentHash = ref(window.location.hash);
+
+// Update hash on navigation
+onMounted(() => {
+  window.addEventListener("hashchange", () => {
+    currentHash.value = window.location.hash;
+  });
+});
 
 const faqSections = [
   {
-    title: "Key Details & Timing",
+    title: "Schedule & Timing",
     questions: [
       {
         question: "When should I RSVP by?",
@@ -20,14 +39,19 @@ const faqSections = [
           "The ceremony begins at 4:30 PM. We recommend arriving 15-20 minutes early to get settled. The reception will follow immediately after, with bar service from 5:00 PM to 11:00 PM.",
       },
       {
-        question: "Can I bring my children?",
+        question: "Will there be speeches?",
         answer:
-          "Due to limited space, we are unable to accommodate children. This is an adults-only celebration.",
+          "No speeches or head table - we want a relaxed, enjoyable evening celebrating with our loved ones.",
+      },
+      {
+        question: "Will there be dancing?",
+        answer:
+          "Yes! The dance will take place in the venue's beautiful ballroom.",
       },
     ],
   },
   {
-    title: "Venue Information",
+    title: "Venue & Parking",
     questions: [
       {
         question: "Where is the wedding taking place?",
@@ -67,28 +91,13 @@ const faqSections = [
     ],
   },
   {
-    title: "Event Flow",
+    title: "Guest Information",
     questions: [
       {
-        question: "What's the photography policy?",
+        question: "Can I bring my children?",
         answer:
-          "A professional photographer will be capturing our special day. To ensure the best possible ceremony photos, we kindly ask guests to keep their phones away during the ceremony. The photography schedule is as follows: Bridal party photos before the ceremony, followed by family and friend photos immediately after (before sunset at 5:00 PM).",
+          "Due to limited space, we are unable to accommodate children. This is an adults-only celebration.",
       },
-      {
-        question: "Will there be speeches?",
-        answer:
-          "No speeches or head table - we want a relaxed, enjoyable evening celebrating with our loved ones.",
-      },
-      {
-        question: "Will there be dancing?",
-        answer:
-          "Yes! The dance will take place in the venue's beautiful ballroom.",
-      },
-    ],
-  },
-  {
-    title: "Guest Preparation",
-    questions: [
       {
         question: "What should I wear?",
         answer:
@@ -98,6 +107,11 @@ const faqSections = [
         question: "What is your gift policy?",
         answer:
           "Your presence is our present! Cards are welcome, but please no gifts (our house is small).",
+      },
+      {
+        question: "What's the photography policy?",
+        answer:
+          "A professional photographer will be capturing our special day. To ensure the best possible ceremony photos, we kindly ask guests to keep their phones away during the ceremony. The photography schedule is as follows: Bridal party photos before the ceremony, followed by family and friend photos immediately after (before sunset at 5:00 PM).",
       },
     ],
   },
@@ -109,36 +123,135 @@ const faqSections = [
     <Head title="FAQ" />
 
     <div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <Heading class="text-center mb-12">Frequently Asked Questions</Heading>
+      <Heading class="text-center mb-12" />
 
       <Card class="overflow-hidden">
         <div class="p-6">
+          <h1 class="heading text-6xl text-center mb-4">FAQ</h1>
+          <p class="text-center text-gray-600 mb-12 text-xl">
+            Frequently Asked Questions
+          </p>
+
+          <nav class="toc mb-12">
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <li v-for="section in faqSections" :key="section.title">
+                <a
+                  :href="'#' + slugify(section.title)"
+                  :class="[
+                    'heading text-2xl text-purple-800 hover:text-purple-600 transition-colors block mb-2 group',
+                    currentHash === '#' + slugify(section.title)
+                      ? 'text-purple-600 rounded-sm border border-purple-600'
+                      : '',
+                  ]"
+                >
+                  {{ section.title }}
+                  <span
+                    class="inline-block transition-transform group-hover:translate-x-1"
+                    >→</span
+                  >
+                </a>
+                <ul class="space-y-1">
+                  <li
+                    v-for="question in section.questions"
+                    :key="question.question"
+                  >
+                    <a
+                      :href="'#' + slugify(question.question)"
+                      :class="[
+                        'text-gray-600 hover:text-purple-600 transition-colors group inline-flex items-center',
+                        currentHash === '#' + slugify(question.question)
+                          ? 'text-purple-600 bg-purple-50 -mx-2 px-2 py-0.5 rounded border border-purple-300'
+                          : '',
+                      ]"
+                    >
+                      {{ question.question }}
+                      <span
+                        class="inline-block transition-transform group-hover:translate-x-1 ml-1 opacity-0 group-hover:opacity-100"
+                        >→</span
+                      >
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+
+          <div class="w-full flex justify-center">
+            <Divider :height="60" class="my-8" />
+          </div>
+
           <div
             v-for="(section, sectionIndex) in faqSections"
             :key="section.title"
             class="mb-12 last:mb-0"
           >
-            <h2 class="heading text-3xl text-gray-900 mb-4 text-center">
+            <h2
+              :id="slugify(section.title)"
+              :class="[
+                'heading text-3xl text-gray-900 mb-4 text-center group',
+                currentHash === '#' + slugify(section.title)
+                  ? 'text-purple-800'
+                  : '',
+              ]"
+            >
               {{ section.title }}
+              <a
+                :href="'#' + slugify(section.title)"
+                class="opacity-0 group-hover:opacity-100 ml-2 text-purple-600 hover:text-purple-800 transition-all"
+              >
+                #
+              </a>
             </h2>
             <div
               v-for="(faq, faqIndex) in section.questions"
               :key="faq.question"
             >
               <div class="py-4 text-center">
-                <h3 class="text-lg font-medium text-gray-900 mb-2">
-                  {{ faq.question }}
-                </h3>
-                <p class="text-gray-600">
-                  {{ faq.answer }}
-                  <Link
-                    v-if="faq.question === 'Where is the wedding taking place?'"
-                    href="/location"
-                    class="text-purple-600 hover:text-purple-800 transition-colors"
+                <div
+                  :class="[
+                    'transition-colors rounded py-2',
+                    currentHash === '#' + slugify(faq.question)
+                      ? 'bg-purple-50 border border-purple-300'
+                      : '',
+                  ]"
+                >
+                  <h3
+                    :id="slugify(faq.question)"
+                    :class="[
+                      'text-lg font-medium mb-2 group transition-colors',
+                      currentHash === '#' + slugify(faq.question)
+                        ? 'text-purple-800'
+                        : 'text-gray-900',
+                    ]"
                   >
-                    View Location Details →
-                  </Link>
-                </p>
+                    {{ faq.question }}
+                    <a
+                      :href="'#' + slugify(faq.question)"
+                      class="opacity-0 group-hover:opacity-100 ml-2 text-purple-600 hover:text-purple-800 transition-all"
+                    >
+                      #
+                    </a>
+                  </h3>
+                  <p
+                    :class="[
+                      'transition-colors',
+                      currentHash === '#' + slugify(faq.question)
+                        ? 'text-gray-700'
+                        : 'text-gray-600',
+                    ]"
+                  >
+                    {{ faq.answer }}
+                    <Link
+                      v-if="
+                        faq.question === 'Where is the wedding taking place?'
+                      "
+                      href="/location"
+                      class="text-purple-600 hover:text-purple-800 transition-colors"
+                    >
+                      View Location Details →
+                    </Link>
+                  </p>
+                </div>
               </div>
               <div class="flex justify-center">
                 <Divider

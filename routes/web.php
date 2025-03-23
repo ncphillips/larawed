@@ -17,8 +17,10 @@ Route::name('faq')->get('/faq', function () {
     return inertia('FAQ');
 });
 
-Route::resource('guests', GuestController::class);
-Route::resource('invitations', InvitationController::class);
+Route::middleware('auth')->group(function () {
+    Route::resource('guests', GuestController::class);
+    Route::resource('invitations', InvitationController::class);
+});
 
 Route::name('rsvp.show')->get('rsvp/{slug}', [RsvpController::class, 'show']);
 Route::name('rsvp.update')->put('rsvp/{slug}', [RsvpController::class, 'update']);

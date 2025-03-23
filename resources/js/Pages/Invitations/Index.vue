@@ -20,7 +20,15 @@
                 <span v-if="guest.email">({{ guest.email }})</span>
               </span>
               <span>
-                <template v-if="guest.attending === null">TBD</template>
+                <template v-if="!guest.invitation_sent_at">
+                  Not yet sent
+                </template>
+                <template v-else-if="guest.attending === null">
+                  Sent at
+                  {{ formatMonthDay(guest.invitation_sent_at) }}
+                  @
+                  {{ formatTime(guest.invitation_sent_at) }}
+                </template>
                 <template v-else-if="guest.attending">Attending</template>
                 <template v-else>Not attending</template>
               </span>
@@ -46,4 +54,18 @@ type InvitationWithGuests = Invitation & {
 defineProps<{
   invitations: InvitationWithGuests[];
 }>();
+
+function formatMonthDay(date: string) {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function formatTime(date: string) {
+  return new Date(date).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    hour12: true,
+  });
+}
 </script>

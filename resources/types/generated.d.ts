@@ -13,6 +13,7 @@ declare namespace App.Models {
     created_at: string | null;
     updated_at: string | null;
     invitation_id: number | null;
+    invitation_sent_at: string | null;
   };
   export type Invitation = {
     id: number;

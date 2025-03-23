@@ -12,7 +12,6 @@
           there to celebrate with us. Please let us know if you can make it by
           filling in the form below.
         </p>
-        <a :href="route('home')" class="text-center underline"> Learn more </a>
         <fieldset v-for="(guest, index) in invitation.guests">
           <legend class="text-2xl mb-4 font-smi-bold text-center w-fit">
             Will <strong>{{ guest.first_name }}</strong> be attending the
@@ -39,6 +38,10 @@
         </fieldset>
 
         <AButton type="submit"> Send RSVP</AButton>
+
+        <a :href="route('faq')" class="text-center underline text-purple-700">
+          Have any questions? Check out the FAQ
+        </a>
       </form>
     </Card>
   </Layout>

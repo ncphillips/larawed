@@ -39,7 +39,10 @@
 
         <AButton type="submit"> Send RSVP</AButton>
 
-        <a :href="route('faq')" class="text-center underline text-purple-700">
+        <a
+          :href="route('faq')"
+          class="text-center underline text-purple-700 text-xl"
+        >
           Have any questions? Check out the FAQ
         </a>
       </form>

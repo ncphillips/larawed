@@ -1,4 +1,5 @@
 <template>
+  <Head title="Ellen & Nolan's Wedding" />
   <Heading />
 
   <main>
@@ -28,7 +29,7 @@
 </template>
 <script setup lang="ts">
 import Heading from "@/Components/Heading.vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, Head } from "@inertiajs/vue3";
 import XLink from "@/Components/x-link.vue";
 import { route } from "ziggy-js";
 import Card from "@/Components/Card.vue";

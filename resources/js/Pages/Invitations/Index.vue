@@ -5,11 +5,30 @@
       <Card>
         <h2 class="heading text-3xl mb-3">Invitations</h2>
         <div v-for="invitation in invitations" class="w-full">
-          <h3 class="heading text-4xl mb-2 hover:underline">
-            <x-link :href="route('rsvp.show', { slug: invitation.slug })">
-              {{ invitation.slug }}
+          <div class="flex justify-between items-center">
+            <h3 class="heading text-4xl mb-2 hover:underline">
+              <x-link :href="route('rsvp.show', { slug: invitation.slug })">
+                {{ invitation.slug }}
+              </x-link>
+            </h3>
+            <x-link
+              method="post"
+              class="border border-purple-700 rounded-md px-2 py-1 text-purple-700 hover:bg-purple-700 hover:text-white"
+              :class="[
+                !isInvitationSent(invitation)
+                  ? 'bg-purple-700 text-white'
+                  : 'bg-white text-purple-700',
+              ]"
+              :href="
+                route('invitations.send', {
+                  invitation: invitation.id,
+                })
+              "
+            >
+              <span v-if="!isInvitationSent(invitation)">Send Invitations</span>
+              <span v-else>Resend Invitations</span>
             </x-link>
-          </h3>
+          </div>
           <ul>
             <li
               v-for="guest in invitation.guests"
@@ -67,5 +86,9 @@ function formatTime(date: string) {
     hour: "numeric",
     hour12: true,
   });
+}
+
+function isInvitationSent(invitation: InvitationWithGuests) {
+  return invitation.guests.filter((guest) => guest.invitation_sent_at).length;
 }
 </script>

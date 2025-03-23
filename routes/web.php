@@ -20,6 +20,7 @@ Route::name('faq')->get('/faq', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('guests', GuestController::class);
     Route::resource('invitations', InvitationController::class);
+    Route::name('invitations.send')->post('/invitations/{invitation}/send', [InvitationController::class, 'send']);
 });
 
 Route::name('rsvp.show')->get('rsvp/{slug}', [RsvpController::class, 'show']);

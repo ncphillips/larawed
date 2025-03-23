@@ -30,7 +30,7 @@ class InvitationMail extends Mailable
     {
         return new Envelope(
             to: $this->guest->email,
-            subject: 'We marrying!',
+            subject: 'Nolan & Ellen are getting married!',
         );
     }
 

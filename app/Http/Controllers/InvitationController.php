@@ -13,4 +13,11 @@ class InvitationController extends Controller
             'invitations' => Invitation::with('guests')->get(),
         ]);
     }
+
+    public function send(Invitation $invitation)
+    {
+        $invitation->guests->filter->email->each->sendInvitation();
+
+        return redirect()->route('invitations.index');
+    }
 }

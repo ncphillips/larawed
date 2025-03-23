@@ -4,6 +4,58 @@
     <div>
       <Card>
         <h2 class="heading text-3xl mb-3">Invitations</h2>
+
+        <table class="w-full">
+          <thead>
+            <tr>
+              <th
+                class="pr-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+              >
+                TOTAL GUESTS
+              </th>
+              <th
+                class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+              >
+                RESPONDED
+              </th>
+              <th
+                class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+              >
+                ATTENDING
+              </th>
+              <th
+                class="pl-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+              >
+                NOT ATTENDING
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                class="pr-6 py-4 text-2xl font-light text-gray-800 text-center"
+              >
+                {{ allGuests.length }}
+              </td>
+              <td
+                class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
+              >
+                {{ allRespondedGuests.length }}
+              </td>
+              <td
+                class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
+              >
+                {{ allRespondedGuests.filter((g) => g.attending).length }}
+              </td>
+              <td
+                class="pl-6 py-4 text-2xl font-light text-gray-800 text-center"
+              >
+                {{ allRespondedGuests.filter((g) => !g.attending).length }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
         <div v-for="invitation in invitations" class="w-full">
           <div class="flex justify-between items-center">
             <h3 class="heading text-4xl mb-2 hover:underline">
@@ -65,12 +117,13 @@ import Invitation = App.Models.Invitation;
 import Card from "@/Components/Card.vue";
 import { route } from "ziggy-js";
 import XLink from "@/Components/x-link.vue";
+import { computed } from "vue";
 
 type InvitationWithGuests = Invitation & {
   guests: App.Models.Guest[];
 };
 
-defineProps<{
+const { invitations } = defineProps<{
   invitations: InvitationWithGuests[];
 }>();
 
@@ -91,4 +144,12 @@ function formatTime(date: string) {
 function isInvitationSent(invitation: InvitationWithGuests) {
   return invitation.guests.filter((guest) => guest.invitation_sent_at).length;
 }
+
+const allGuests = computed(() => {
+  return invitations.flatMap((i) => i.guests);
+});
+
+const allRespondedGuests = computed(() => {
+  return allGuests.value.filter((g) => g.attending !== null);
+});
 </script>

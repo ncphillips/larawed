@@ -65,10 +65,10 @@
             </h3>
             <x-link
               method="post"
-              class="border border-purple-700 rounded-md px-2 py-1 text-purple-700 hover:bg-purple-700 hover:text-white"
+              class="border border-purple-800 rounded-md px-2 py-1 text-purple-700 hover:bg-purple-700 hover:text-white"
               :class="[
                 !isInvitationSent(invitation)
-                  ? 'bg-purple-700 text-white'
+                  ? 'bg-purple-800 text-white'
                   : 'bg-white text-purple-700',
               ]"
               :href="

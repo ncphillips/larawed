@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Head title="Edit" />
+    <Head title="RSVP to Nolan & Ellen's Wedding" />
     <Card>
       <form
         @submit.prevent="form.put(route('rsvp.update', invitation.slug))"

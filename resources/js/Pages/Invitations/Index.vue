@@ -5,6 +5,68 @@
       <Card>
         <h2 class="heading text-3xl mb-3">Invitations</h2>
 
+        <table class="w-full mb-8">
+          <thead>
+            <tr>
+              <th
+                class="pr-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+              >
+                TOTAL INVITATIONS
+              </th>
+              <th
+                class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+              >
+                INVITATIONS SENT
+              </th>
+              <th
+                class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+              >
+                INVITATIONS RESPONDED
+              </th>
+              <th
+                class="pl-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+              >
+                NO EMAIL ADDRESSES
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                class="pr-6 py-4 text-2xl font-light text-gray-800 text-center"
+              >
+                {{ invitations.length }}
+              </td>
+              <td
+                class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
+              >
+                {{
+                  invitations.filter((i) =>
+                    i.guests.some((g) => g.invitation_sent_at),
+                  ).length
+                }}
+              </td>
+              <td
+                class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
+              >
+                {{
+                  invitations.filter((i) =>
+                    i.guests.some((g) => g.attending !== null),
+                  ).length
+                }}
+              </td>
+              <td
+                class="pl-6 py-4 text-2xl font-light text-gray-800 text-center"
+              >
+                {{
+                  invitations.filter((i) => i.guests.every((g) => !g.email))
+                    .length
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
         <table class="w-full">
           <thead>
             <tr>

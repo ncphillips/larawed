@@ -183,7 +183,9 @@
                   >Not attending</template
                 >
                 <template v-else-if="!guest.invitation_sent_at">
-                  Not yet sent
+                  <span v-if="guest.email" class="text-gray-500 text-sm">
+                    Not yet sent
+                  </span>
                 </template>
                 <template v-else-if="guest.attending === null">
                   Sent at

@@ -235,7 +235,9 @@ const activeFitler = ref<string | null>(null);
 
 const filteredInvitations = computed(() => {
   if (activeFitler.value === "sent") {
-    return invitations.filter((i) => isInvitationSent(i));
+    return invitations
+      .filter((i) => i.guests.some((g) => g.attending === null))
+      .filter((i) => isInvitationSent(i));
   }
   if (activeFitler.value === "responded") {
     return invitations.filter((i) =>

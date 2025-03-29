@@ -143,32 +143,38 @@
                 {{ invitation.slug }}
               </x-link>
             </h3>
-            <x-link
-              v-if="invitation.guests.find((guest) => !!guest.email)"
-              method="post"
-              class="border border-purple-800 rounded-md px-2 py-1 text-purple-700 hover:bg-purple-700 hover:text-white"
-              :class="[
-                !isInvitationSent(invitation)
-                  ? 'bg-purple-800 text-white'
-                  : 'bg-white text-purple-700',
-              ]"
-              :href="
-                route('invitations.send', {
-                  invitation: invitation.id,
-                })
-              "
+            <template
+              v-if="!invitation.guests.every((g) => g.attending !== null)"
             >
-              <span v-if="!isInvitationSent(invitation)">Send Invitations</span>
-              <span v-else>Resend Invitations</span>
-            </x-link>
-            <span
-              v-else
-              class="text-gray-500 text-sm rounded-lg px-2 py-1 bg-gray-100 border border-gray-200"
-            >
-              Emails Missing
-            </span>
+              <x-link
+                v-if="invitation.guests.find((guest) => !!guest.email)"
+                method="post"
+                class="border border-purple-800 rounded-md px-2 py-1 text-purple-700 hover:bg-purple-700 hover:text-white"
+                :class="[
+                  !isInvitationSent(invitation)
+                    ? 'bg-purple-800 text-white'
+                    : 'bg-white text-purple-700',
+                ]"
+                :href="
+                  route('invitations.send', {
+                    invitation: invitation.id,
+                  })
+                "
+              >
+                <span v-if="!isInvitationSent(invitation)"
+                  >Send Invitations</span
+                >
+                <span v-else>Resend Invitations</span>
+              </x-link>
+              <span
+                v-else
+                class="text-gray-500 text-sm rounded-lg px-2 py-1 bg-gray-100 border border-gray-200"
+              >
+                Emails Missing
+              </span>
+            </template>
           </div>
-          <ul>
+          <ul class="flex flex-col gap-2">
             <li
               v-for="guest in invitation.guests"
               class="flex justify-between gap-2"
@@ -178,7 +184,13 @@
                 <span v-if="guest.email">({{ guest.email }})</span>
               </span>
               <span>
-                <template v-if="guest.attending">Attending</template>
+                <template v-if="guest.attending">
+                  <span
+                    class="bg-green-100 border border-green-900 text-green-900 rounded-lg px-2 py-0.5"
+                  >
+                    Attending 🎉
+                  </span>
+                </template>
                 <template v-else-if="guest.attending === false"
                   >Not attending</template
                 >

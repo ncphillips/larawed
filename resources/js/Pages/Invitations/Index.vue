@@ -34,7 +34,7 @@
                 }"
                 @click="activeFitler = 'sent'"
               >
-                INVITATIONS SENT
+                EMAILS SENT
               </th>
               <th
                 class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
@@ -43,7 +43,7 @@
                 }"
                 @click="activeFitler = 'responded'"
               >
-                INVITATIONS RESPONDED
+                RSVPs
               </th>
             </tr>
           </thead>
@@ -58,8 +58,9 @@
                 class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
               >
                 {{
-                  invitations.filter((i) => i.guests.every((g) => !g.email))
-                    .length
+                  invitations
+                    .filter((i) => i.guests.some((g) => g.attending === null))
+                    .filter((i) => i.guests.every((g) => !g.email)).length
                 }}
               </td>
               <td
@@ -242,7 +243,9 @@ const filteredInvitations = computed(() => {
     );
   }
   if (activeFitler.value === "missing-emails") {
-    return invitations.filter((i) => i.guests.every((g) => !g.email));
+    return invitations
+      .filter((i) => i.guests.some((g) => g.attending === null))
+      .filter((i) => i.guests.every((g) => !g.email));
   }
   return invitations;
 });

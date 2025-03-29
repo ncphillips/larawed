@@ -31,6 +31,8 @@ class RsvpController extends Controller
             ]);
         }
 
-        return redirect()->route('rsvp.show', $slug);
+        return inertia('Rsvp/ThankYou', [
+            'invitation' => ['slug' => $slug],
+        ]);
     }
 }

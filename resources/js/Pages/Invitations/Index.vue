@@ -64,6 +64,7 @@
               </x-link>
             </h3>
             <x-link
+              v-if="invitation.guests.find((guest) => !!guest.email)"
               method="post"
               class="border border-purple-800 rounded-md px-2 py-1 text-purple-700 hover:bg-purple-700 hover:text-white"
               :class="[
@@ -80,6 +81,12 @@
               <span v-if="!isInvitationSent(invitation)">Send Invitations</span>
               <span v-else>Resend Invitations</span>
             </x-link>
+            <span
+              v-else
+              class="text-gray-500 text-sm rounded-lg px-2 py-1 bg-gray-100 border border-gray-200"
+            >
+              Emails Missing
+            </span>
           </div>
           <ul>
             <li

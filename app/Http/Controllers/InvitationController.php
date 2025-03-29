@@ -3,14 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invitation;
-use Illuminate\Http\Request;
+use App\Models\Guest;
 
 class InvitationController extends Controller
 {
     public function index()
     {
         return inertia('Invitations/Index', [
-            'invitations' => Invitation::with('guests')->get(),
+            'invitations' => Invitation::with('guests')
+                ->select('invitations.*')
+                ->selectSub(
+                    Guest::selectRaw('MAX(updated_at)')
+                        ->whereColumn('invitation_id', 'invitations.id'),
+                    'last_rsvp_at'
+                )
+                ->orderBy('last_rsvp_at', 'desc')
+                ->get(),
         ]);
     }
 

@@ -9,31 +9,48 @@
           <thead>
             <tr>
               <th
-                class="pr-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+                class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+                :class="{
+                  'bg-purple-400 text-white px-2': !activeFitler,
+                }"
+                @click="activeFitler = null"
               >
                 TOTAL INVITATIONS
               </th>
               <th
                 class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+                :class="{
+                  'bg-purple-400 text-white px-2':
+                    activeFitler === 'missing-emails',
+                }"
+                @click="activeFitler = 'missing-emails'"
+              >
+                NO EMAIL ADDRESSES
+              </th>
+              <th
+                class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+                :class="{
+                  'bg-purple-400 text-white px-2': activeFitler === 'sent',
+                }"
+                @click="activeFitler = 'sent'"
               >
                 INVITATIONS SENT
               </th>
               <th
                 class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+                :class="{
+                  'bg-purple-400 text-white px-2': activeFitler === 'responded',
+                }"
+                @click="activeFitler = 'responded'"
               >
                 INVITATIONS RESPONDED
-              </th>
-              <th
-                class="pl-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
-              >
-                NO EMAIL ADDRESSES
               </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td
-                class="pr-6 py-4 text-2xl font-light text-gray-800 text-center"
+                class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
               >
                 {{ invitations.length }}
               </td>
@@ -41,9 +58,18 @@
                 class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
               >
                 {{
-                  invitations.filter((i) =>
-                    i.guests.some((g) => g.invitation_sent_at),
-                  ).length
+                  invitations.filter((i) => i.guests.every((g) => !g.email))
+                    .length
+                }}
+              </td>
+              <td
+                class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
+              >
+                {{
+                  invitations
+                    .filter((i) => i.guests.some((g) => g.invitation_sent_at))
+                    .filter((i) => i.guests.every((g) => g.attending === null))
+                    .length
                 }}
               </td>
               <td
@@ -55,14 +81,6 @@
                   ).length
                 }}
               </td>
-              <td
-                class="pl-6 py-4 text-2xl font-light text-gray-800 text-center"
-              >
-                {{
-                  invitations.filter((i) => i.guests.every((g) => !g.email))
-                    .length
-                }}
-              </td>
             </tr>
           </tbody>
         </table>
@@ -71,14 +89,14 @@
           <thead>
             <tr>
               <th
-                class="pr-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+                class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
               >
                 TOTAL GUESTS
               </th>
               <th
                 class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
               >
-                RESPONDED
+                NOT RESPONDED
               </th>
               <th
                 class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
@@ -86,7 +104,7 @@
                 ATTENDING
               </th>
               <th
-                class="pl-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
+                class="px-6 py-4 text-left text-sm tracking-[0.15em] font-light text-gray-600 border-b border-gray-200"
               >
                 NOT ATTENDING
               </th>
@@ -95,14 +113,14 @@
           <tbody>
             <tr>
               <td
-                class="pr-6 py-4 text-2xl font-light text-gray-800 text-center"
+                class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
               >
                 {{ allGuests.length }}
               </td>
               <td
                 class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
               >
-                {{ allRespondedGuests.length }}
+                {{ allGuests.filter((g) => g.attending === null).length }}
               </td>
               <td
                 class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
@@ -110,7 +128,7 @@
                 {{ allRespondedGuests.filter((g) => g.attending).length }}
               </td>
               <td
-                class="pl-6 py-4 text-2xl font-light text-gray-800 text-center"
+                class="px-6 py-4 text-2xl font-light text-gray-800 text-center"
               >
                 {{ allRespondedGuests.filter((g) => !g.attending).length }}
               </td>
@@ -118,7 +136,7 @@
           </tbody>
         </table>
 
-        <div v-for="invitation in invitations" class="w-full">
+        <div v-for="invitation in filteredInvitations" class="w-full">
           <div class="flex justify-between items-center">
             <h3 class="heading text-4xl mb-2 hover:underline">
               <x-link :href="route('rsvp.show', { slug: invitation.slug })">
@@ -188,7 +206,7 @@ import Invitation = App.Models.Invitation;
 import Card from "@/Components/Card.vue";
 import { route } from "ziggy-js";
 import XLink from "@/Components/x-link.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 type InvitationWithGuests = Invitation & {
   guests: App.Models.Guest[];
@@ -197,6 +215,23 @@ type InvitationWithGuests = Invitation & {
 const { invitations } = defineProps<{
   invitations: InvitationWithGuests[];
 }>();
+
+const activeFitler = ref<string | null>(null);
+
+const filteredInvitations = computed(() => {
+  if (activeFitler.value === "sent") {
+    return invitations.filter((i) => isInvitationSent(i));
+  }
+  if (activeFitler.value === "responded") {
+    return invitations.filter((i) =>
+      i.guests.some((g) => g.attending !== null),
+    );
+  }
+  if (activeFitler.value === "missing-emails") {
+    return invitations.filter((i) => i.guests.every((g) => !g.email));
+  }
+  return invitations;
+});
 
 function formatMonthDay(date: string) {
   return new Date(date).toLocaleDateString("en-US", {

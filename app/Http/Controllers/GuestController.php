@@ -12,4 +12,11 @@ class GuestController extends Controller
             'guests' => Guest::with('invitation')->get(),
         ]);
     }
+
+    public function destroy(Guest $guest)
+    {
+        $guest->delete();
+
+        return redirect()->back()->with('success', 'Guest deleted successfully');
+    }
 }

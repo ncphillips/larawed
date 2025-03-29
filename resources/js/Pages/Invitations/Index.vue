@@ -91,7 +91,11 @@
                 <span v-if="guest.email">({{ guest.email }})</span>
               </span>
               <span>
-                <template v-if="!guest.invitation_sent_at">
+                <template v-if="guest.attending">Attending</template>
+                <template v-else-if="guest.attending === false"
+                  >Not attending</template
+                >
+                <template v-else-if="!guest.invitation_sent_at">
                   Not yet sent
                 </template>
                 <template v-else-if="guest.attending === null">
@@ -100,8 +104,6 @@
                   @
                   {{ formatTime(guest.invitation_sent_at) }}
                 </template>
-                <template v-else-if="guest.attending">Attending</template>
-                <template v-else>Not attending</template>
               </span>
             </li>
           </ul>

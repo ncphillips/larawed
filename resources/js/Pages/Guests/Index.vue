@@ -1,8 +1,8 @@
 <template>
   <Layout>
     <Head title="Guests" />
-    <Card>
-      <div class="max-w-4xl mx-auto">
+    <Card class="max-w-full mx-auto">
+      <div class="max-w-8xl mx-auto">
         <h2 class="heading text-3xl font-bold mb-4 text-gray-800">
           Guest List
         </h2>
@@ -15,28 +15,34 @@
           <div
             class="grid grid-cols-12 gap-4 font-semibold text-gray-700 pb-2 border-b"
           >
-            <div class="col-span-4">Name</div>
-            <div class="col-span-3">Invitation</div>
-            <div class="col-span-3">Status</div>
-            <div class="col-span-2">Actions</div>
+            <div class="col-span-2">First Name</div>
+            <div class="col-span-2">Last Name</div>
+            <div class="col-span-3">Email</div>
+            <div class="col-span-2">Invitation</div>
+            <div class="col-span-2">Status</div>
+            <div class="col-span-1">Actions</div>
           </div>
 
           <div
             v-for="guest in guests"
             class="grid grid-cols-12 gap-4 py-3 hover:bg-gray-50 rounded-lg transition-colors"
           >
-            <div class="col-span-4">
-              <span class="font-medium"
-                >{{ guest.first_name }} {{ guest.last_name }}</span
-              >
-              <span v-if="guest.email" class="text-gray-500 text-sm ml-2"
+            <div class="col-span-2">
+              <span class="font-medium">{{ guest.first_name }}</span>
+            </div>
+            <div class="col-span-2">
+              <span class="font-medium">{{ guest.last_name }}</span>
+              <span v-if="guest.email" class="text-gray-500 text-sm ml-2 block"
                 >({{ guest.email }})</span
               >
             </div>
             <div class="col-span-3 text-gray-600">
+              {{ guest.email || "-" }}
+            </div>
+            <div class="col-span-2 text-gray-600">
               {{ guest.invitation.slug }}
             </div>
-            <div class="col-span-3">
+            <div class="col-span-2">
               <span
                 :class="{
                   'px-3 py-1 rounded-full text-sm font-medium': true,
@@ -50,7 +56,7 @@
                 <template v-else>Not attending</template>
               </span>
             </div>
-            <div class="col-span-2">
+            <div class="col-span-1">
               <button
                 @click="confirmDelete(guest)"
                 class="text-red-600 hover:text-red-800 transition-colors"

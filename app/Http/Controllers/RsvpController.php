@@ -23,13 +23,12 @@ class RsvpController extends Controller
             'guests.*.attending' => 'nullable|boolean',
         ]);
 
-        foreach ($data['guests'] as $guest) {
-            $guest = Guest::find($guest['id']);
+        foreach ($data['guests'] as $guestData) {
+            $guest = Guest::find($guestData['id']);
 
             $guest->update([
-                'attending' => $guest['attending'],
+                'attending' => $guestData['attending'],
             ]);
-
         }
 
         return redirect()->route('rsvp.show', $slug);

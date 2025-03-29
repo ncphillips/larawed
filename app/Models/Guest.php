@@ -19,6 +19,7 @@ class Guest extends Model
         'last_name',
         'guest_id',
         'invitation_sent_at',
+        'attending',
     ];
 
     public function invitation(): BelongsTo

@@ -12,6 +12,7 @@ defineProps<{}>();
     <Card>
       <h2 class="heading text-3xl mb-3">Location</h2>
       <div class="mt-4 w-full max-w-xl">
+          <!-- bbox=-63.13092,46.23252,-63.12692,46.23452& -->
         <iframe
           class="rounded border"
           width="100%"
@@ -22,6 +23,7 @@ defineProps<{}>();
           scrolling="no"
           marginheight="0"
           marginwidth="0"
+          src="https://www.openstreetmap.org/export/embed.html?layer=mapnik&marker=46.230548,-63.127790"
           src="https://www.openstreetmap.org/?mlat=46.230548&mlon=-63.127790#map=17/46.230548/-63.127790"
         ></iframe>
         <a

@@ -24,7 +24,6 @@ defineProps<{}>();
           marginheight="0"
           marginwidth="0"
           src="https://www.openstreetmap.org/export/embed.html?layer=mapnik&marker=46.230548,-63.127790"
-          src="https://www.openstreetmap.org/?mlat=46.230548&mlon=-63.127790#map=17/46.230548/-63.127790"
         ></iframe>
         <a
           href="https://www.openstreetmap.org/?mlat=46.230548&mlon=-63.127790#map=17/46.230548/-63.127790"

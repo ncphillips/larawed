@@ -22,10 +22,10 @@ defineProps<{}>();
           scrolling="no"
           marginheight="0"
           marginwidth="0"
-          src="https://www.openstreetmap.org/?mlat=46.230446&mlon=-63.128619#map=18/46.230446/-63.128619"
+          src="https://www.openstreetmap.org/?mlat=46.230548&mlon=-63.127790#map=17/46.230548/-63.127790"
         ></iframe>
         <a
-          href="https://www.openstreetmap.org/?mlat=46.230446&mlon=-63.128619#map=18/46.230446/-63.128619"
+          href="https://www.openstreetmap.org/?mlat=46.230548&mlon=-63.127790#map=17/46.230548/-63.127790"
           target="_blank"
           rel="noopener noreferrer"
           class="mt-2 inline-block text-purple-600 hover:text-purple-800 transition-colors"

@@ -94,11 +94,6 @@ const faqSections = [
     title: "Guest Information",
     questions: [
       {
-        question: "Can I bring my children?",
-        answer:
-          "Due to limited space, we are unable to accommodate children. This is an adults-only celebration.",
-      },
-      {
         question: "What should I wear?",
         answer:
           "The dress code is dressy-casual/semiformal. Wear something that makes you feel comfortable and festive - this is a celebration! And remember that November weather can be chilly.",

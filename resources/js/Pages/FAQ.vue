@@ -36,7 +36,7 @@ const faqSections = [
       {
         question: "What's the schedule for the day?",
         answer:
-          "The ceremony begins at 4:30 PM. We recommend arriving 15-20 minutes early to get settled. The reception will follow immediately after, with bar service from 5:00 PM to 11:00 PM.",
+          "The ceremony begins at 4:30 PM. We recommend arriving 15-30 minutes early to get settled. The reception will follow immediately after, with bar service from 5:00 PM to 11:00 PM.",
       },
       {
         question: "Will there be speeches?",
